@@ -23,9 +23,8 @@ class SemblastTaskService implements TaskService {
   }
 
   @override
-  Future<void> updateTask(Task task) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  Future<void> updateTask(Task task) async {
+    await _taskStore.update(_db, task.toJson());
   }
 
   Stream<List<Task>> tasks() {
@@ -33,5 +32,10 @@ class SemblastTaskService implements TaskService {
         .query(finder: Finder(sortOrders: [SortOrder('id')]))
         .onSnapshots(_db)
         .map((event) => event.map((e) => Task.fromMap(e.key, e.value)).toList());
+  }
+
+  @override
+  Stream<Task> task(int id) {
+    return _taskStore.record(id).onSnapshot(_db).map((e) => Task.fromMap(e.key, e.value));
   }
 }
