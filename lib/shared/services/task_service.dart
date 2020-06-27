@@ -1,4 +1,4 @@
-import '../models/task/task.dart';
+import '../../features/add_task/models/task/task.dart';
 
 abstract class TaskService {
   Future<void> addTask(Task task);

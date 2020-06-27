@@ -1,5 +1,6 @@
 import 'package:sembast/sembast.dart';
-import '../models/task/task.dart';
+
+import '../../features/add_task/models/task/task.dart';
 import 'task_service.dart';
 
 class SemblastTaskService implements TaskService {
@@ -7,7 +8,7 @@ class SemblastTaskService implements TaskService {
 
   final _taskStore = intMapStoreFactory.store('tasks');
 
-  final Database _db;
+  Database _db;
   SemblastTaskService(this._db);
 
   @override
@@ -16,9 +17,9 @@ class SemblastTaskService implements TaskService {
   }
 
   @override
-  Future<void> removeTask(Task task) {
-    // TODO: implement removeTask
-    throw UnimplementedError();
+  Future<void> removeTask(Task task) async {
+    final finder = Finder(filter: Filter.byKey(task.id));
+    await _taskStore.delete(_db, finder: finder);
   }
 
   @override
@@ -31,6 +32,6 @@ class SemblastTaskService implements TaskService {
     return _taskStore
         .query(finder: Finder(sortOrders: [SortOrder('id')]))
         .onSnapshots(_db)
-        .map((event) => event.map((e) => Task.fromJson(e.value)).toList());
+        .map((event) => event.map((e) => Task.fromMap(e.key, e.value)).toList());
   }
 }

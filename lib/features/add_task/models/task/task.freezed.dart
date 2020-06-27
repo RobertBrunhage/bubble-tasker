@@ -8,9 +8,6 @@ part of 'task.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-Task _$TaskFromJson(Map<String, dynamic> json) {
-  return _Task.fromJson(json);
-}
 
 class _$TaskTearOff {
   const _$TaskTearOff();
@@ -34,7 +31,6 @@ mixin _$Task {
   Duration get duration;
   int get timesToDo;
 
-  Map<String, dynamic> toJson();
   $TaskCopyWith<Task> get copyWith;
 }
 
@@ -98,12 +94,9 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-class _$_Task with DiagnosticableTreeMixin implements _Task {
-  const _$_Task({this.id, this.name, this.duration, this.timesToDo});
-
-  factory _$_Task.fromJson(Map<String, dynamic> json) =>
-      _$_$_TaskFromJson(json);
+class _$_Task extends _Task with DiagnosticableTreeMixin {
+  const _$_Task({this.id, this.name, this.duration, this.timesToDo})
+      : super._();
 
   @override
   final int id;
@@ -157,18 +150,12 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
   @override
   _$TaskCopyWith<_Task> get copyWith =>
       __$TaskCopyWithImpl<_Task>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_TaskToJson(this);
-  }
 }
 
-abstract class _Task implements Task {
+abstract class _Task extends Task {
+  const _Task._() : super._();
   const factory _Task({int id, String name, Duration duration, int timesToDo}) =
       _$_Task;
-
-  factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
   @override
   int get id;

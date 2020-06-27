@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
+import 'package:tasktimerconcept/features/overview/overview_view_model_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TaskCard extends StatelessWidget {
+  const TaskCard({Key key, this.task}) : super(key: key);
+  final Task task;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -11,22 +17,22 @@ class TaskCard extends StatelessWidget {
         textColor: Colors.white,
         child: ListTile(
           title: Text(
-            'Work on X',
+            'Work on ${task.name}',
             style: TextStyle(
               fontSize: 24,
             ),
           ),
           subtitle: Row(
             children: [
-              Text('20 min'),
+              Text('${task.duration.inMinutes} min'),
               SizedBox(width: 56),
-              Text('3x'),
+              Text('${task.timesToDo}x'),
             ],
           ),
           trailing: IconButton(
             color: Colors.white,
             icon: Icon(Icons.more_horiz),
-            onPressed: () {},
+            onPressed: () => overviewViewModelProvider.read(context).removeTask(task),
           ),
         ),
       ),

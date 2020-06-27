@@ -7,13 +7,7 @@ import 'package:sembast/sembast_io.dart';
 import 'package:sembast/sembast.dart';
 
 class SemblastAppDatabase {
-  static final SemblastAppDatabase _singleton = SemblastAppDatabase._();
-
-  static SemblastAppDatabase get instance => _singleton;
-
   Completer<Database> _dbOpenCompleter;
-
-  SemblastAppDatabase._();
 
   Future<Database> get database async {
     if (_dbOpenCompleter == null) {
