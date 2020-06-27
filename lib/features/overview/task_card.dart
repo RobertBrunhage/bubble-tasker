@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
 import 'package:tasktimerconcept/features/overview/overview_view_model_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasktimerconcept/features/task_view/task_view_screen.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({Key key, this.task}) : super(key: key);
@@ -16,8 +17,15 @@ class TaskCard extends StatelessWidget {
       child: ListTileTheme(
         textColor: Colors.white,
         child: ListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => TaskViewScreen(id: task.id),
+              ),
+            );
+          },
           title: Text(
-            'Work on ${task.name}',
+            '${task.name}',
             style: TextStyle(
               fontSize: 24,
             ),

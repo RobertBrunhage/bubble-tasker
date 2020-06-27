@@ -6,4 +6,5 @@ abstract class TaskService {
   Future<void> updateTask(Task task);
 
   Stream<List<Task>> tasks();
+  Stream<Task> task(int id);
 }
