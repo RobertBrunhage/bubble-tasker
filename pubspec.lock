@@ -637,13 +637,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  wheel_chooser:
-    dependency: "direct main"
-    description:
-      name: wheel_chooser
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   xdg_directories:
     dependency: transitive
     description:
