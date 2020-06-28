@@ -18,6 +18,15 @@ class OverviewScreen extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final tasks = snapshot.data;
+                if (tasks.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "Create a task 😊",
+                      style: Theme.of(context).textTheme.headline4,
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
                 return ListView.builder(
                   itemCount: tasks.length,
                   padding: EdgeInsets.all(8),
