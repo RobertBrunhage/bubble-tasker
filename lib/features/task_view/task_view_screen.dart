@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
 import 'package:tasktimerconcept/features/task_view/task_view_view_model_provider.dart';
+import 'package:tasktimerconcept/shared/widgets/custom_raised_button.dart';
 
 import 'bubbles.dart';
 
@@ -14,8 +15,6 @@ class TaskViewScreen extends StatefulWidget {
 }
 
 class _TaskViewScreenState extends State<TaskViewScreen> {
-  int amount = 100;
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -34,13 +33,13 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
                     child: Column(
                       children: [
                         SizedBox(height: 48),
-                        Text("A bubble will pop every minute"),
+                        topTitle(context),
                         Spacer(),
-                        Text("${task.duration.inMinutes} bubbles left"),
+                        middleText(task, context),
                         Spacer(),
-                        RaisedButton(
-                          onPressed: () => viewmodel.removeABubble(),
-                          child: Text("Start"),
+                        CustomRaisedButton(
+                          onTap: viewmodel.removeABubble,
+                          text: "Start",
                         ),
                         SizedBox(height: 48),
                       ],
@@ -53,6 +52,29 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
           },
         );
       }),
+    );
+  }
+
+  Text topTitle(BuildContext context) {
+    return Text(
+      "A bubble will pop \nevery minute",
+      style: Theme.of(context).textTheme.headline4,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  RichText middleText(Task task, BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: '${task.duration.inMinutes} ',
+        style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
+        children: [
+          TextSpan(
+            text: 'bubbles left',
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ],
+      ),
     );
   }
 }
