@@ -102,15 +102,17 @@ class _AddTaskState extends State<AddTask> {
               Stack(
                 children: [
                   Positioned(
-                    top: 94,
+                    top: 65,
                     left: 40,
-                    child: Text('Duration: $durationInMinutes minutes'),
+                    child: Text('$durationInMinutes minutes'),
                   ),
                   SingleCircularSlider(
                     // divisions
                     12,
                     // position
                     1,
+                    height: 150,
+                    width: 150,
                     // a = ?, b = position, c = ?
                     onSelectionChange: (a, b, c) {
                       calculateDurationFromPosition(b);
