@@ -19,7 +19,9 @@ class TaskViewViewModel extends ChangeNotifier {
 
   // Call this with the timer
   void removeABubble() {
-    bubbles.removeLast();
+    if (bubbles.isNotEmpty) {
+      bubbles.removeLast();
+    }
   }
 
   // Call this with the timer

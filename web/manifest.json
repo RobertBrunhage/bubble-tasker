@@ -1,11 +1,11 @@
 {
-    "name": "tasktimerconcept",
-    "short_name": "tasktimerconcept",
+    "name": "Hack20",
+    "short_name": "Hack20",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A pomodoro timer task app concept",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
