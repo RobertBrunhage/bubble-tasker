@@ -24,7 +24,8 @@ class SemblastTaskService implements TaskService {
 
   @override
   Future<void> updateTask(Task task) async {
-    await _taskStore.update(_db, task.toJson());
+    final finder = Finder(filter: Filter.byKey(task.id));
+    await _taskStore.update(_db, task.toJson(), finder: finder);
   }
 
   Stream<List<Task>> tasks() {
