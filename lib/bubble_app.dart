@@ -26,9 +26,10 @@ class BubbleApp extends StatelessWidget {
           canvasColor: Color(0xff121231),
           cardColor: Color(0xff1B1D3C),
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          buttonColor: Color(0xff3A3C5F),
           textTheme: GoogleFonts.montserratTextTheme(
             Theme.of(context).textTheme.copyWith(
-                  button: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  button: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                   bodyText1: TextStyle(color: Colors.white),
                   bodyText2: TextStyle(color: Colors.white),
                   subtitle1: TextStyle(color: Colors.white),
