@@ -32,9 +32,7 @@ class TaskCard extends StatelessWidget {
           ),
           subtitle: Row(
             children: [
-              Text('${task.duration.inMinutes} min'),
-              SizedBox(width: 56),
-              Text('${task.timesToDo}x'),
+              Text('${task.calculatedTime} min'),
             ],
           ),
           trailing: IconButton(

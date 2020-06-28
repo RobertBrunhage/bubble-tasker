@@ -60,25 +60,6 @@ class _AddTaskState extends State<AddTask> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xff3A3C5F),
-                      border: InputBorder.none,
-                      hintText: 'Repeat',
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    // TODO: Change this to correct picker later
-                    onSaved: (timesToDo) => addTaskViewModel.timesToDo = int.parse(timesToDo),
-                  ),
-                ),
-              ),
               Expanded(child: Container()),
               Padding(
                 padding: const EdgeInsets.all(16.0),
