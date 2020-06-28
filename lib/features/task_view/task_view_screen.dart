@@ -38,6 +38,11 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
             return Stack(
               children: [
                 // Background with bubbles
+                Positioned(
+                  top: 48,
+                  left: 34,
+                  child: BackButton(color: Colors.white),
+                ),
                 Bubbles(
                   amount: viewmodel.task.calculatedTime,
                   color: Color(0xff7476A2),
