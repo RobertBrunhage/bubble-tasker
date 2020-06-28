@@ -21,6 +21,7 @@ class BubbleApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Bubble tasker',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           canvasColor: Color(0xff121231),
           cardColor: Color(0xff1B1D3C),

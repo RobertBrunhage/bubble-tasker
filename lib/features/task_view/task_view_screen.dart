@@ -31,18 +31,13 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
           }),
         )
       ],
-      child: Material(
-        child: Consumer((context, read) {
+      child: Scaffold(
+        body: Consumer((context, read) {
           final viewmodel = read(taskViewViewModelProvider);
           if (viewmodel.task != null) {
             return Stack(
               children: [
                 // Background with bubbles
-                Positioned(
-                  top: 48,
-                  left: 34,
-                  child: BackButton(color: Colors.white),
-                ),
                 Bubbles(
                   amount: viewmodel.task.calculatedTime,
                   color: Color(0xff7476A2),
@@ -86,7 +81,14 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
   Column timerBody(BuildContext context, TaskViewViewModel viewmodel) {
     return Column(
       children: [
-        SizedBox(height: 48),
+        SizedBox(height: 34),
+        Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: BackButton(color: Colors.white),
+          ),
+        ),
         topTitle(context),
         Spacer(),
         middleText(viewmodel.task, context),
@@ -101,35 +103,41 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
   }
 
   Widget completeBody(BuildContext context, TaskViewViewModel viewmodel) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Spacer(),
-          Text(
-            "Well done!",
-            style: Theme.of(context).textTheme.headline4,
+    return Column(
+      children: [
+        SizedBox(height: 34),
+        Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: BackButton(color: Colors.white),
           ),
-          Spacer(),
-          CustomRaisedButton(
-            onTap: () async {
-              viewmodel.removeTask();
-              Navigator.of(context).pop();
-            },
-            text: "Delete",
+        ),
+        Spacer(),
+        Text(
+          "Well done!",
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        Spacer(),
+        CustomRaisedButton(
+          onTap: () async {
+            viewmodel.removeTask();
+            Navigator.of(context).pop();
+          },
+          text: "Delete",
+        ),
+        SizedBox(height: 48),
+        ButtonTheme(
+          minWidth: 300,
+          height: 78,
+          child: FlatButton(
+            onPressed: viewmodel.resetTask,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Text("Redo", style: Theme.of(context).textTheme.button),
           ),
-          SizedBox(height: 48),
-          ButtonTheme(
-            minWidth: 300,
-            height: 78,
-            child: FlatButton(
-              onPressed: viewmodel.resetTask,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              child: Text("Redo", style: Theme.of(context).textTheme.button),
-            ),
-          ),
-          SizedBox(height: 48),
-        ],
-      ),
+        ),
+        SizedBox(height: 48),
+      ],
     );
   }
 }
