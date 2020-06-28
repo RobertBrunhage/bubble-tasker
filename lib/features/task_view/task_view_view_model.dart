@@ -5,9 +5,12 @@ import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
 import 'package:tasktimerconcept/features/task_view/bubbles.dart';
 import 'package:tasktimerconcept/shared/services/task_service.dart';
 
+import 'audio_service.dart';
+
 class TaskViewViewModel extends ChangeNotifier {
   final TaskService _taskService;
-  TaskViewViewModel(this._taskService);
+  final AudioService _audioService;
+  TaskViewViewModel(this._taskService, this._audioService);
 
   List<Bubble> bubbles = [];
   StreamSubscription _taskSub;
@@ -18,13 +21,16 @@ class TaskViewViewModel extends ChangeNotifier {
   void startStopTimer() {
     if (_timer != null) {
       if (_timer.isActive) {
+        _audioService.stopMusic();
         _timer.cancel();
         _timer = null;
         notifyListeners();
       }
     } else {
+      _audioService.playMusic();
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         if (task.durationLeft.inSeconds == 0) {
+          _audioService.stopMusic();
           _timer.cancel();
           notifyListeners();
         } else {
@@ -64,5 +70,6 @@ class TaskViewViewModel extends ChangeNotifier {
     super.dispose();
     _taskSub?.cancel();
     _timer?.cancel();
+    _audioService?.stopMusic();
   }
 }
