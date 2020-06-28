@@ -7,8 +7,6 @@ import 'package:tasktimerconcept/shared/providers/task_service_provider.dart';
 import 'package:tasktimerconcept/shared/services/semblast_task_service.dart';
 import 'package:tasktimerconcept/shared/services/task_service.dart';
 
-import 'features/overview/overview_screen.dart';
-
 class BubbleApp extends StatelessWidget {
   final Database _db;
   BubbleApp(this._db);

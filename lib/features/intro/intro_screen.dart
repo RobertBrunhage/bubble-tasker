@@ -30,6 +30,7 @@ class _IntroScreenState extends State<IntroScreen> {
       }
 
       if (index == _titles.length - 1) {
+        _timer.cancel();
         Future.delayed(Duration(seconds: 4), () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => OverviewScreen()));
         });
