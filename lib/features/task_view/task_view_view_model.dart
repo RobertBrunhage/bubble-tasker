@@ -49,6 +49,7 @@ class TaskViewViewModel extends ChangeNotifier {
   void removeABubble() {
     if (bubbles.isNotEmpty) {
       bubbles.removeLast();
+      notifyListeners();
     }
   }
 
@@ -56,6 +57,17 @@ class TaskViewViewModel extends ChangeNotifier {
   Future<void> updateTask(Task task) async {
     final updatedTask = task.copyWith();
     await _taskService.updateTask(updatedTask);
+  }
+
+  Future<void> resetTask() async {
+    print(task.id);
+    final resettedTask = task.copyWith(durationLeft: task.duration);
+    await _taskService.updateTask(resettedTask);
+    notifyListeners();
+  }
+
+  Future<void> removeTask() async {
+    await _taskService.removeTask(task);
   }
 
   void init(int id) {

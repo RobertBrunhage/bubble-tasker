@@ -44,25 +44,7 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
                   bubbles: viewmodel.bubbles,
                 ),
                 Center(
-                  child: viewmodel.task.calculatedTime != 0
-                      ? Column(
-                          children: [
-                            SizedBox(height: 48),
-                            topTitle(context),
-                            Spacer(),
-                            middleText(viewmodel.task, context),
-                            Spacer(),
-                            CustomRaisedButton(
-                              onTap: viewmodel.startStopTimer,
-                              text: !viewmodel.isTimerActive ? "Start" : "Stop",
-                            ),
-                            SizedBox(height: 48),
-                          ],
-                        )
-                      : Text(
-                          "Well done!",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
+                  child: viewmodel.task.calculatedTime != 0 ? timerBody(context, viewmodel) : completeBody(context, viewmodel),
                 ),
               ],
             );
@@ -91,6 +73,56 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
             text: 'bubbles left',
             style: Theme.of(context).textTheme.headline4,
           ),
+        ],
+      ),
+    );
+  }
+
+  Column timerBody(BuildContext context, TaskViewViewModel viewmodel) {
+    return Column(
+      children: [
+        SizedBox(height: 48),
+        topTitle(context),
+        Spacer(),
+        middleText(viewmodel.task, context),
+        Spacer(),
+        CustomRaisedButton(
+          onTap: viewmodel.startStopTimer,
+          text: !viewmodel.isTimerActive ? "Start" : "Stop",
+        ),
+        SizedBox(height: 48),
+      ],
+    );
+  }
+
+  Widget completeBody(BuildContext context, TaskViewViewModel viewmodel) {
+    return SafeArea(
+      child: Column(
+        children: [
+          Spacer(),
+          Text(
+            "Well done!",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Spacer(),
+          CustomRaisedButton(
+            onTap: () async {
+              viewmodel.removeTask();
+              Navigator.of(context).pop();
+            },
+            text: "Delete",
+          ),
+          SizedBox(height: 48),
+          ButtonTheme(
+            minWidth: 300,
+            height: 78,
+            child: FlatButton(
+              onPressed: viewmodel.resetTask,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              child: Text("Redo", style: Theme.of(context).textTheme.button),
+            ),
+          ),
+          SizedBox(height: 48),
         ],
       ),
     );
