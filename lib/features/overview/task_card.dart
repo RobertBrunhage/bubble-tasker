@@ -37,7 +37,7 @@ class TaskCard extends StatelessWidget {
           ),
           trailing: IconButton(
             color: Colors.white,
-            icon: Icon(Icons.more_horiz),
+            icon: Icon(Icons.delete_outline),
             onPressed: () => overviewViewModelProvider.read(context).removeTask(task),
           ),
         ),
