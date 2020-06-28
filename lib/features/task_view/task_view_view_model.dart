@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
 import 'package:tasktimerconcept/features/task_view/bubbles.dart';
@@ -8,13 +10,29 @@ class TaskViewViewModel extends ChangeNotifier {
   TaskViewViewModel(this._taskService);
 
   List<Bubble> bubbles = [];
+  StreamSubscription _taskSub;
+  Task task;
+  Timer _timer;
+  bool get isTimerActive => _timer?.isActive ?? false;
 
-  void startTimer() {
-    throw UnimplementedError();
-  }
-
-  void stopTimer() {
-    throw UnimplementedError();
+  void startStopTimer() {
+    if (_timer != null) {
+      if (_timer.isActive) {
+        _timer.cancel();
+        _timer = null;
+        notifyListeners();
+      }
+    } else {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        if (task.duration.inSeconds == 0) {
+          _timer.cancel();
+          notifyListeners();
+        }
+        final updatedTask = task.copyWith(duration: Duration(seconds: task.duration.inSeconds - 1));
+        debugPrint(updatedTask.duration.inMinutes.toString());
+        updateTask(updatedTask);
+      });
+    }
   }
 
   // Call this with the timer
@@ -26,9 +44,21 @@ class TaskViewViewModel extends ChangeNotifier {
 
   // Call this with the timer
   Future<void> updateTask(Task task) async {
-    final updatedTask = task.copyWith(duration: Duration(minutes: 5));
+    final updatedTask = task.copyWith();
     await _taskService.updateTask(updatedTask);
   }
 
-  Stream<Task> task(int id) => _taskService.task(id);
+  void init(int id) {
+    _taskSub = _taskService.task(id).listen((event) {
+      task = event;
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _taskSub?.cancel();
+    _timer?.cancel();
+  }
 }
