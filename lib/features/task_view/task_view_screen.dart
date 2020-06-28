@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
+import 'package:tasktimerconcept/features/task_view/audio_service.dart';
 import 'package:tasktimerconcept/features/task_view/task_view_view_model.dart';
 import 'package:tasktimerconcept/features/task_view/task_view_view_model_provider.dart';
 import 'package:tasktimerconcept/shared/providers/task_service_provider.dart';
@@ -24,7 +25,7 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
         taskViewViewModelProvider.overrideAs(
           AutoDisposeChangeNotifierProvider<TaskViewViewModel>((ref) {
             final taskService = ref.read(taskServiceProvider).value;
-            final taskViewModel = TaskViewViewModel(taskService);
+            final taskViewModel = TaskViewViewModel(taskService, AssetAudioService());
 
             return taskViewModel..init(widget.id);
           }),
