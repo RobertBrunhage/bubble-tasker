@@ -12,7 +12,7 @@ class AddTaskViewModel extends ChangeNotifier {
   String name;
   Duration duration;
 
-  void saveForm() async {
+  Future<bool> saveForm() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       final task = Task(name: name, duration: duration, durationLeft: duration);
@@ -20,9 +20,11 @@ class AddTaskViewModel extends ChangeNotifier {
       try {
         await _taskService.addTask(task);
         formKey.currentState.reset();
+        return true;
       } catch (e) {
         debugPrint("Something went wrong: $e");
       }
     }
+    return false;
   }
 }
