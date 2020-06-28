@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasktimerconcept/features/add_task/models/task/task.dart';
+import 'package:tasktimerconcept/features/task_view/task_view_view_model.dart';
 import 'package:tasktimerconcept/features/task_view/task_view_view_model_provider.dart';
+import 'package:tasktimerconcept/shared/providers/task_service_provider.dart';
 import 'package:tasktimerconcept/shared/widgets/custom_raised_button.dart';
 
 import 'bubbles.dart';
@@ -17,41 +19,47 @@ class TaskViewScreen extends StatefulWidget {
 class _TaskViewScreenState extends State<TaskViewScreen> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Consumer((context, read) {
-        final viewmodel = read(taskViewViewModelProvider);
-        return StreamBuilder<Task>(
-          stream: viewmodel.task(widget.id),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final task = snapshot.data;
-              return Stack(
-                children: [
-                  // Background with bubbles
-                  Bubbles(amount: task.duration.inMinutes, color: Color(0xff7476A2), bubbles: viewmodel.bubbles),
-                  Center(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 48),
-                        topTitle(context),
-                        Spacer(),
-                        middleText(task, context),
-                        Spacer(),
-                        CustomRaisedButton(
-                          onTap: viewmodel.removeABubble,
-                          text: "Start",
-                        ),
-                        SizedBox(height: 48),
-                      ],
-                    ),
+    return ProviderScope(
+      overrides: [
+        taskViewViewModelProvider.overrideAs(
+          AutoDisposeChangeNotifierProvider<TaskViewViewModel>((ref) {
+            final taskService = ref.read(taskServiceProvider).value;
+            final taskViewModel = TaskViewViewModel(taskService);
+
+            return taskViewModel..init(widget.id);
+          }),
+        )
+      ],
+      child: Material(
+        child: Consumer((context, read) {
+          final viewmodel = read(taskViewViewModelProvider);
+          if (viewmodel.task != null) {
+            return Stack(
+              children: [
+                // Background with bubbles
+                Bubbles(amount: viewmodel.task.duration.inMinutes, color: Color(0xff7476A2), bubbles: viewmodel.bubbles),
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 48),
+                      topTitle(context),
+                      Spacer(),
+                      middleText(viewmodel.task, context),
+                      Spacer(),
+                      CustomRaisedButton(
+                        onTap: viewmodel.startStopTimer,
+                        text: !viewmodel.isTimerActive ? "Start" : "Stop",
+                      ),
+                      SizedBox(height: 48),
+                    ],
                   ),
-                ],
-              );
-            }
-            return SizedBox();
-          },
-        );
-      }),
+                ),
+              ],
+            );
+          }
+          return SizedBox();
+        }),
+      ),
     );
   }
 
