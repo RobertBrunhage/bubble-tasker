@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sembast/sembast.dart';
+import 'package:tasktimerconcept/features/intro/intro_screen.dart';
 import 'package:tasktimerconcept/shared/providers/task_service_provider.dart';
 import 'package:tasktimerconcept/shared/services/semblast_task_service.dart';
 import 'package:tasktimerconcept/shared/services/task_service.dart';
@@ -43,7 +44,7 @@ class BubbleApp extends StatelessWidget {
                 ),
           ),
         ),
-        home: OverviewScreen(),
+        home: IntroScreen(),
       ),
     );
   }
