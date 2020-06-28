@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,8 +103,8 @@ class _AddTaskState extends State<AddTask> {
               Stack(
                 children: [
                   Positioned(
-                    top: 65,
-                    left: 40,
+                    top: kIsWeb ? 110 : 65,
+                    left: kIsWeb ? 86 : 40,
                     child: Text('$durationInMinutes minutes'),
                   ),
                   SingleCircularSlider(
@@ -111,8 +112,8 @@ class _AddTaskState extends State<AddTask> {
                     12,
                     // position
                     1,
-                    height: 150,
-                    width: 150,
+                    height: kIsWeb ? 240 : 150,
+                    width: kIsWeb ? 240 : 150,
                     // a = ?, b = position, c = ?
                     onSelectionChange: (a, b, c) {
                       calculateDurationFromPosition(b);

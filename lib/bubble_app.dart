@@ -20,7 +20,7 @@ class BubbleApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Task Timer Concept',
+        title: 'Bubble tasker',
         theme: ThemeData(
           canvasColor: Color(0xff121231),
           cardColor: Color(0xff1B1D3C),
