@@ -12,12 +12,12 @@ T _$identity<T>(T value) => value;
 class _$TaskTearOff {
   const _$TaskTearOff();
 
-  _Task call({int id, String name, Duration duration, int timesToDo}) {
+  _Task call({int id, String name, Duration duration, Duration durationLeft}) {
     return _Task(
       id: id,
       name: name,
       duration: duration,
-      timesToDo: timesToDo,
+      durationLeft: durationLeft,
     );
   }
 }
@@ -29,7 +29,7 @@ mixin _$Task {
   int get id;
   String get name;
   Duration get duration;
-  int get timesToDo;
+  Duration get durationLeft;
 
   $TaskCopyWith<Task> get copyWith;
 }
@@ -37,7 +37,7 @@ mixin _$Task {
 abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res>;
-  $Res call({int id, String name, Duration duration, int timesToDo});
+  $Res call({int id, String name, Duration duration, Duration durationLeft});
 }
 
 class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
@@ -52,13 +52,15 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
     Object id = freezed,
     Object name = freezed,
     Object duration = freezed,
-    Object timesToDo = freezed,
+    Object durationLeft = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as int,
       name: name == freezed ? _value.name : name as String,
       duration: duration == freezed ? _value.duration : duration as Duration,
-      timesToDo: timesToDo == freezed ? _value.timesToDo : timesToDo as int,
+      durationLeft: durationLeft == freezed
+          ? _value.durationLeft
+          : durationLeft as Duration,
     ));
   }
 }
@@ -67,7 +69,7 @@ abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   factory _$TaskCopyWith(_Task value, $Res Function(_Task) then) =
       __$TaskCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, Duration duration, int timesToDo});
+  $Res call({int id, String name, Duration duration, Duration durationLeft});
 }
 
 class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
@@ -83,19 +85,21 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
     Object id = freezed,
     Object name = freezed,
     Object duration = freezed,
-    Object timesToDo = freezed,
+    Object durationLeft = freezed,
   }) {
     return _then(_Task(
       id: id == freezed ? _value.id : id as int,
       name: name == freezed ? _value.name : name as String,
       duration: duration == freezed ? _value.duration : duration as Duration,
-      timesToDo: timesToDo == freezed ? _value.timesToDo : timesToDo as int,
+      durationLeft: durationLeft == freezed
+          ? _value.durationLeft
+          : durationLeft as Duration,
     ));
   }
 }
 
 class _$_Task extends _Task with DiagnosticableTreeMixin {
-  const _$_Task({this.id, this.name, this.duration, this.timesToDo})
+  const _$_Task({this.id, this.name, this.duration, this.durationLeft})
       : super._();
 
   @override
@@ -105,11 +109,11 @@ class _$_Task extends _Task with DiagnosticableTreeMixin {
   @override
   final Duration duration;
   @override
-  final int timesToDo;
+  final Duration durationLeft;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(id: $id, name: $name, duration: $duration, timesToDo: $timesToDo)';
+    return 'Task(id: $id, name: $name, duration: $duration, durationLeft: $durationLeft)';
   }
 
   @override
@@ -120,7 +124,7 @@ class _$_Task extends _Task with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('duration', duration))
-      ..add(DiagnosticsProperty('timesToDo', timesToDo));
+      ..add(DiagnosticsProperty('durationLeft', durationLeft));
   }
 
   @override
@@ -134,9 +138,9 @@ class _$_Task extends _Task with DiagnosticableTreeMixin {
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
-            (identical(other.timesToDo, timesToDo) ||
+            (identical(other.durationLeft, durationLeft) ||
                 const DeepCollectionEquality()
-                    .equals(other.timesToDo, timesToDo)));
+                    .equals(other.durationLeft, durationLeft)));
   }
 
   @override
@@ -145,7 +149,7 @@ class _$_Task extends _Task with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(duration) ^
-      const DeepCollectionEquality().hash(timesToDo);
+      const DeepCollectionEquality().hash(durationLeft);
 
   @override
   _$TaskCopyWith<_Task> get copyWith =>
@@ -154,8 +158,11 @@ class _$_Task extends _Task with DiagnosticableTreeMixin {
 
 abstract class _Task extends Task {
   const _Task._() : super._();
-  const factory _Task({int id, String name, Duration duration, int timesToDo}) =
-      _$_Task;
+  const factory _Task(
+      {int id,
+      String name,
+      Duration duration,
+      Duration durationLeft}) = _$_Task;
 
   @override
   int get id;
@@ -164,7 +171,7 @@ abstract class _Task extends Task {
   @override
   Duration get duration;
   @override
-  int get timesToDo;
+  Duration get durationLeft;
   @override
   _$TaskCopyWith<_Task> get copyWith;
 }

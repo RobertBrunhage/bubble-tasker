@@ -37,22 +37,31 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
             return Stack(
               children: [
                 // Background with bubbles
-                Bubbles(amount: viewmodel.task.duration.inMinutes, color: Color(0xff7476A2), bubbles: viewmodel.bubbles),
+                Bubbles(
+                  amount: viewmodel.task.calculatedTime,
+                  color: Color(0xff7476A2),
+                  bubbles: viewmodel.bubbles,
+                ),
                 Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 48),
-                      topTitle(context),
-                      Spacer(),
-                      middleText(viewmodel.task, context),
-                      Spacer(),
-                      CustomRaisedButton(
-                        onTap: viewmodel.startStopTimer,
-                        text: !viewmodel.isTimerActive ? "Start" : "Stop",
-                      ),
-                      SizedBox(height: 48),
-                    ],
-                  ),
+                  child: viewmodel.task.calculatedTime != 0
+                      ? Column(
+                          children: [
+                            SizedBox(height: 48),
+                            topTitle(context),
+                            Spacer(),
+                            middleText(viewmodel.task, context),
+                            Spacer(),
+                            CustomRaisedButton(
+                              onTap: viewmodel.startStopTimer,
+                              text: !viewmodel.isTimerActive ? "Start" : "Stop",
+                            ),
+                            SizedBox(height: 48),
+                          ],
+                        )
+                      : Text(
+                          "Well done!",
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
                 ),
               ],
             );
@@ -74,7 +83,7 @@ class _TaskViewScreenState extends State<TaskViewScreen> {
   RichText middleText(Task task, BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: '${task.duration.inMinutes} ',
+        text: '${task.calculatedTime} ',
         style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
         children: [
           TextSpan(

@@ -24,13 +24,17 @@ class TaskViewViewModel extends ChangeNotifier {
       }
     } else {
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        if (task.duration.inSeconds == 0) {
+        if (task.durationLeft.inSeconds == 0) {
           _timer.cancel();
           notifyListeners();
+        } else {
+          final updatedTask = task.copyWith(durationLeft: Duration(seconds: task.durationLeft.inSeconds - 1));
+          if (updatedTask.calculatedTime != bubbles.length) {
+            removeABubble();
+          }
+          print((task.duration.inSeconds - task.durationLeft.inSeconds) % 60);
+          updateTask(updatedTask);
         }
-        final updatedTask = task.copyWith(duration: Duration(seconds: task.duration.inSeconds - 1));
-        debugPrint(updatedTask.duration.inMinutes.toString());
-        updateTask(updatedTask);
       });
     }
   }

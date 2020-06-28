@@ -11,12 +11,11 @@ class AddTaskViewModel extends ChangeNotifier {
 
   String name;
   Duration duration;
-  int timesToDo;
 
   void saveForm() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      final task = Task(name: name, duration: duration, timesToDo: timesToDo);
+      final task = Task(name: name, duration: duration, durationLeft: duration);
 
       try {
         await _taskService.addTask(task);
