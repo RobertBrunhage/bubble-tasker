@@ -9,7 +9,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  static final _titles = <String>[
+  static const _titles = <String>[
     "Covid-19 made us \nuneasy",
     "Focus on what is \nimportant for you",
     "Create a task and \nlet the bubbles pop",
@@ -32,28 +32,49 @@ class _IntroScreenState extends State<IntroScreen> {
       if (index == _titles.length - 1) {
         _timer.cancel();
         Future.delayed(Duration(seconds: 4), () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OverviewScreen()));
+          pushReplacementOverview();
         });
       }
     });
   }
 
-  // Todo: Maybe add a skip button later or only show on first startup
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 500),
-          child: Text(
-            _titles[index],
-            key: ValueKey(_titles[index]),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline4,
+      child: Stack(
+        children: [
+          Center(
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              child: Text(
+                _titles[index],
+                key: ValueKey(_titles[index]),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 34,
+            right: 34,
+            child: FlatButton(
+              onPressed: () {
+                _timer.cancel();
+                pushReplacementOverview();
+              },
+              child: Text(
+                "Skip",
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  void pushReplacementOverview() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OverviewScreen()));
   }
 
   @override
